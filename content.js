@@ -54,8 +54,26 @@ document.addEventListener('mouseup', (e) => {
 
 // --- UI Actions ---
 function showTrigger(rect) {
-  trigger.style.top = `${rect.top + window.scrollY - 45}px`;
-  trigger.style.left = `${rect.right + window.scrollX - 20}px`;
+  const triggerWidth = 44;
+  const triggerHeight = 44;
+  const padding = 10;
+
+  let top = rect.top + window.scrollY - triggerHeight - 5;
+  let left = rect.right + window.scrollX - 20;
+
+  // Viewport constraints
+  if (top < window.scrollY + padding) {
+    top = rect.bottom + window.scrollY + 5;
+  }
+  if (left + triggerWidth > window.scrollX + window.innerWidth - padding) {
+    left = window.scrollX + window.innerWidth - triggerWidth - padding;
+  }
+  if (left < window.scrollX + padding) {
+    left = window.scrollX + padding;
+  }
+
+  trigger.style.top = `${top}px`;
+  trigger.style.left = `${left}px`;
   trigger.classList.add('active');
   panel.classList.remove('active');
 }
@@ -68,8 +86,29 @@ trigger.addEventListener('click', (e) => {
 
 function showPanel() {
   const { rect, text } = currentSelection;
-  panel.style.top = `${rect.bottom + window.scrollY + 10}px`;
-  panel.style.left = `${rect.left + window.scrollX}px`;
+  const panelWidth = 320;
+  const panelHeight = 220; // Estimated max height
+  const padding = 20;
+
+  let top = rect.bottom + window.scrollY + 10;
+  let left = rect.left + window.scrollX;
+
+  // Viewport constraints
+  if (top + panelHeight > window.scrollY + window.innerHeight - padding) {
+    top = rect.top + window.scrollY - panelHeight - 10;
+  }
+  if (left + panelWidth > window.scrollX + window.innerWidth - padding) {
+    left = window.scrollX + window.innerWidth - panelWidth - padding;
+  }
+  if (left < window.scrollX + padding) {
+    left = window.scrollX + padding;
+  }
+  if (top < window.scrollY + padding) {
+    top = window.scrollY + padding;
+  }
+
+  panel.style.top = `${top}px`;
+  panel.style.left = `${left}px`;
   document.getElementById('banglish-preview-box').textContent = text.slice(0, 100) + (text.length > 100 ? '...' : '');
   panel.classList.add('active');
 }
