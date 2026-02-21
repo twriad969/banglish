@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --bg: #111111;
+      --accent: #FF6B00;
+      --accent-grad: linear-gradient(135deg, #FF6B00, #FF9A00);
+      --text: #f0f0f0;
+      --input-bg: #1a1a1a;
+      --border: #2a2a2a;
+    }
+    body {
+      width: 320px;
+      padding: 20px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .provider-toggle {
+      display: flex;
+      background: var(--input-bg);
+      border-radius: 10px;
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+    .toggle-option {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+      color: #888;
+    }
+    .toggle-option.active {
+      background: var(--accent-grad);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    }
+    input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      outline: none;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+    }
+    button#save-btn {
+      width: 100%;
+      background: var(--accent-grad);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.15s, filter 0.15s;
+    }
+    button#save-btn:hover {
+      transform: scale(1.02);
+      filter: brightness(1.1);
+    }
+    #status {
+      margin-top: 12px;
+      font-size: 12px;
+      text-align: center;
+      min-height: 18px;
+      font-weight: 500;
+    }
+    .success { color: var(--accent); }
+    .error { color: #ff4444; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Banglish Settings</h2>
+  </div>
+
+  <div class="field">
+    <label>Provider</label>
+    <div class="provider-toggle" id="provider-toggle">
+      <div class="toggle-option active" data-value="openrouter">OpenRouter</div>
+      <div class="toggle-option" data-value="groq">Groq</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>API Key</label>
+    <input type="password" id="api-key" placeholder="Enter your API key">
+  </div>
+
+  <button id="save-btn">Save Settings</button>
+  <div id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
