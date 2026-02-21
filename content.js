@@ -56,20 +56,34 @@ document.addEventListener('mouseup', (e) => {
 function showTrigger(rect) {
   const triggerWidth = 44;
   const triggerHeight = 44;
-  const padding = 10;
+  const padding = 12;
 
-  let top = rect.top + window.scrollY - triggerHeight - 5;
+  // Initial target position (above selection)
+  let top = rect.top + window.scrollY - triggerHeight - 8;
   let left = rect.right + window.scrollX - 20;
 
-  // Viewport constraints
-  if (top < window.scrollY + padding) {
-    top = rect.bottom + window.scrollY + 5;
+  // Viewport-relative constraints
+  const viewportTop = window.scrollY + padding;
+  const viewportBottom = window.scrollY + window.innerHeight - padding;
+  const viewportLeft = window.scrollX + padding;
+  const viewportRight = window.scrollX + window.innerWidth - padding;
+
+  // If too close to top, move to bottom of selection
+  if (top < viewportTop) {
+    top = rect.bottom + window.scrollY + 8;
   }
-  if (left + triggerWidth > window.scrollX + window.innerWidth - padding) {
-    left = window.scrollX + window.innerWidth - triggerWidth - padding;
+
+  // Horizontal bounds
+  if (left + triggerWidth > viewportRight) {
+    left = viewportRight - triggerWidth;
   }
-  if (left < window.scrollX + padding) {
-    left = window.scrollX + padding;
+  if (left < viewportLeft) {
+    left = viewportLeft;
+  }
+
+  // Safety check for vertical bottom bound
+  if (top + triggerHeight > viewportBottom) {
+    top = viewportBottom - triggerHeight;
   }
 
   trigger.style.top = `${top}px`;
@@ -87,24 +101,43 @@ trigger.addEventListener('click', (e) => {
 function showPanel() {
   const { rect, text } = currentSelection;
   const panelWidth = 320;
-  const panelHeight = 220; // Estimated max height
-  const padding = 20;
+  const padding = 15;
 
+  // We need to show the panel first to get its height
+  panel.style.visibility = 'hidden';
+  panel.style.display = 'flex';
+  const panelHeight = panel.offsetHeight;
+  panel.style.display = 'none';
+  panel.style.visibility = 'visible';
+
+  // Viewport-relative constraints
+  const viewportTop = window.scrollY + padding;
+  const viewportBottom = window.scrollY + window.innerHeight - padding;
+  const viewportLeft = window.scrollX + padding;
+  const viewportRight = window.scrollX + window.innerWidth - padding;
+
+  // Initial target: below selection
   let top = rect.bottom + window.scrollY + 10;
   let left = rect.left + window.scrollX;
 
-  // Viewport constraints
-  if (top + panelHeight > window.scrollY + window.innerHeight - padding) {
+  // If too close to bottom, flip to top
+  if (top + panelHeight > viewportBottom) {
     top = rect.top + window.scrollY - panelHeight - 10;
   }
-  if (left + panelWidth > window.scrollX + window.innerWidth - padding) {
-    left = window.scrollX + window.innerWidth - panelWidth - padding;
+
+  // Final sanity check for vertical bounds
+  if (top < viewportTop) top = viewportTop;
+  if (top + panelHeight > viewportBottom) {
+    // If it still doesn't fit, center it vertically in viewport
+    top = window.scrollY + (window.innerHeight - panelHeight) / 2;
   }
-  if (left < window.scrollX + padding) {
-    left = window.scrollX + padding;
+
+  // Horizontal bounds
+  if (left + panelWidth > viewportRight) {
+    left = viewportRight - panelWidth;
   }
-  if (top < window.scrollY + padding) {
-    top = window.scrollY + padding;
+  if (left < viewportLeft) {
+    left = viewportLeft;
   }
 
   panel.style.top = `${top}px`;
