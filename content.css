@@ -1,180 +1,118 @@
-/* Floating Trigger Button */
-#banglish-trigger {
+#banglish-root #banglish-trigger {
   position: fixed;
   width: 44px;
   height: 44px;
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 107, 0, 0.3);
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 107, 0, 0.4);
   border-radius: 12px;
   display: none;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 2147483647;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 107, 0, 0.1);
-  transform: scale(0.8) translateY(10px);
-  opacity: 0;
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  user-select: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, background 0.2s;
 }
 
-#banglish-trigger.active {
-  display: flex;
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
-
-#banglish-trigger:hover {
-  background: rgba(255, 107, 0, 0.1);
+#banglish-root #banglish-trigger:hover {
+  background: rgba(255, 107, 0, 0.15);
+  transform: scale(1.1);
   border-color: #FF6B00;
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 12px 32px rgba(255, 107, 0, 0.2);
 }
 
-#banglish-trigger img {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-  transition: transform 0.2s;
+#banglish-root #banglish-trigger img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
 }
 
-#banglish-trigger:hover img {
-  transform: rotate(10deg);
-}
-
-/* Translation Panel */
-#banglish-panel {
+#banglish-root #banglish-panel {
   position: fixed;
   width: 320px;
-  background: rgba(10, 10, 10, 0.9);
+  background: rgba(12, 12, 12, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: 24px;
+  border: 1.5px solid rgba(255, 107, 0, 0.2);
+  border-radius: 20px;
+  padding: 20px;
   color: white;
   z-index: 2147483647;
   display: none;
   flex-direction: column;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 107, 0, 0.05);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  opacity: 0;
-  transform: translateY(12px) scale(0.98);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#banglish-panel.active {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-#banglish-panel-header {
+#banglish-root #banglish-panel .banglish-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
 
-#banglish-panel-header span {
+#banglish-root #banglish-panel .banglish-header span {
   font-size: 13px;
   font-weight: 800;
   color: #FF6B00;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  letter-spacing: 1.5px;
 }
 
-#banglish-panel-close {
-  background: rgba(255, 255, 255, 0.05);
+#banglish-root #banglish-panel #banglish-close {
+  background: none;
   border: none;
-  color: #888;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  color: #666;
+  font-size: 20px;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
-#banglish-panel-close:hover {
-  background: rgba(255, 107, 0, 0.1);
-  color: #FF6B00;
-  transform: rotate(90deg);
-}
-
-#banglish-preview-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+#banglish-root #banglish-panel #banglish-preview {
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 14px;
-  font-size: 13.5px;
+  padding: 12px;
+  font-size: 14px;
   color: #bbb;
   margin-bottom: 20px;
+  line-height: 1.6;
   max-height: 80px;
   overflow-y: auto;
-  line-height: 1.6;
-  font-style: italic;
 }
 
-#banglish-translate-btn {
+#banglish-root #banglish-panel #banglish-translate-btn {
   width: 100%;
-  background: linear-gradient(135deg, #FF6B00, #FF8A00);
+  background: linear-gradient(135deg, #FF6B00, #FF9A00);
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   color: white;
   padding: 14px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2);
+  transition: transform 0.2s, filter 0.2s;
 }
 
-#banglish-translate-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.3);
-  filter: brightness(1.05);
+#banglish-root #banglish-panel #banglish-translate-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
-#banglish-translate-btn:active {
-  transform: translateY(0);
-}
-
-#banglish-translate-btn:disabled {
-  background: #333;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-/* Spinner */
-#banglish-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2.5px solid rgba(255, 255, 255, 0.2);
+#banglish-root #banglish-panel #banglish-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
   position: absolute;
   display: none;
-  animation: banglish-spin 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: banglish-spin 0.8s linear infinite;
 }
 
 @keyframes banglish-spin {
   to { transform: rotate(360deg); }
-}
-
-/* Flash effect */
-.banglish-replaced-text {
-  display: inline;
-  background: rgba(255, 107, 0, 0.1);
-  border-radius: 4px;
 }
